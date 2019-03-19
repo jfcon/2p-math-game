@@ -2,6 +2,7 @@ class Player
 players have lives (3) (to read and set)
 players answer Game Questions
 players lose if they run out of lives
+player has turns (their turn to go. True/False)
 
 - variables for Player
   - lives
