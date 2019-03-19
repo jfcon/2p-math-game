@@ -23,4 +23,7 @@ game has rules (once a player loses all lives, it's game over)
   - Game Over: when one player loses all lives, end game, display remaining lives of winner
 
 Class Question
--vars - num1, num2 - sum (num1+num2)
+
+- vars
+- num1, num2
+- sum (num1+num2)
