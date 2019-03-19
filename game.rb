@@ -5,6 +5,7 @@ class Game
 
   def initialize
     puts "WELCOME TO MATH WARS"
+    sleep(2)
     puts 'Please enter your name, Player One.'
     print '> '
     @player1 = Players.new(gets.chomp)
@@ -20,7 +21,7 @@ class Game
     # sleep(1)
     # print ', 2'
     # sleep(1)
-    # print ', 1... '
+    # print ', 1... \n'
     # sleep(1)
   end
 
@@ -28,27 +29,40 @@ class Game
     question = Question.new
     @q = question.question
     @a = question.answer
-  
+    turn_phrase = [", you're up!", ", it's your turn.", "'s turn to answer.", ", come on down!!"]
+    
+
     if @player1.turn
       sleep(1)
-      puts "  - #{@player1.name} -"
-      puts "#{@q}"
+      puts "  - #{@player1.name}#{turn_phrase.sample} -"
+      puts "#{@q}\n\n"
+      print "> "
     else 
       sleep(1)
-      puts "  - #{@player2.name} -"
-      puts "#{@q}"
+      puts "  - #{@player2.name}#{turn_phrase.sample} -"
+      puts "#{@q}\n\n"
+      print "> "
     end
   end
 
   def check_answer
-    x = STDIN.gets.chomp
-    if x.to_i == @a
-      puts "correct!"
-    else puts "incorrect"
+    ans_given = STDIN.gets.chomp
+    if ans_given.to_i == @a
+      puts "Correct!\n\n"
+      scoreboard
+    else 
+      puts "Incorrect!\nThe answer was #{@a.to_s}.\n\n"
+      life
+      scoreboard
     end
   end
 
-  
+  def scoreboard
+    sleep(1)
+    puts "--- Current Score ---"
+    puts "#{@player1.name}: #{@player1.lives}/3 -- #{@player2.name}: #{@player2.lives}/3\n\n"
+  end
+
   def turn_swap
     if @player1.turn
       @player1.turn = false
@@ -59,15 +73,30 @@ class Game
     end
   end
   
-  def run
-    ask_question
-    check_answer
-    turn_swap
-    ask_question
-    check_answer
-    turn_swap
+  def life
+    if @player1.turn
+      @player1.lose_life
+    else
+      @player2.lose_life
+    end
   end
 
+  def game_over
+    if @player2.turn
+      puts "Congratulations #{@player2.name}, you win!"
+    else
+      puts "Congratulations #{@player1.name}, you win!"
+    end
+  end
+
+  def run
+    while @player1.lives > 0 && @player2.lives > 0 
+    ask_question
+    check_answer
+    turn_swap
+    end
+    game_over
+  end
 end
 
 game = Game.new

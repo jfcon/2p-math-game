@@ -6,4 +6,8 @@ class Players
     @lives = 3
     @turn = false
   end
+
+  def lose_life
+    @lives -= 1
+  end
 end
